@@ -47,4 +47,9 @@ public class Priority {
     public Priority(String priorityName){
         this.priorityName = priorityName;
     }
+
+    public Priority(Long id, String priorityName) {
+        this.priorityId = id;
+        this.priorityName = priorityName;
+    }
 }

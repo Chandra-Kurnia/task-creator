@@ -1,8 +1,10 @@
 package com.example.taskcreator.services;
 
 import com.example.taskcreator.Exception.TCException;
+import com.example.taskcreator.dtos.ListOfTasks;
+import com.example.taskcreator.dtos.Pagination;
+import com.example.taskcreator.dtos.TaskFilter;
 import com.example.taskcreator.dtos.TaskPayload;
-import com.example.taskcreator.dtos.UpdateTaskPayload;
 import com.example.taskcreator.entities.Priority;
 import com.example.taskcreator.entities.Status;
 import com.example.taskcreator.entities.Task;
@@ -11,9 +13,15 @@ import com.example.taskcreator.repositories.PriorityRepository;
 import com.example.taskcreator.repositories.StatusRepository;
 import com.example.taskcreator.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -78,8 +86,30 @@ public class TaskService {
         ));
     }
 
-    public ResponseEntity<MessageModel> listTasks() throws TCException {
-        return ResponseEntity.ok().body(new MessageModel());
+    public ResponseEntity<MessageModel> listTasks(TaskFilter filter) throws TCException {
+        Pageable pageable = PageRequest.of(filter.getPage()-1, filter.getLimit());
+//        Page<Task> taskPage = taskRepository.findAll(pageable);
+//        List<Task> tasks = taskPage.getContent();
+
+        Page<Object[]> taskPage = taskRepository.getTasks(
+                filter.getPriorityId(),
+                filter.getStatusId(),
+                filter.getTaskName(),
+                pageable
+        );
+        List<Object[]> tasksObject = taskPage.getContent();
+        List<ListOfTasks> tasks = new ArrayList<>();
+
+        for(Object[] task : tasksObject) {
+            tasks.add(new ListOfTasks(task));
+        }
+
+        return ResponseEntity.ok().body(new MessageModel(
+                "Succesfully get data task",
+                true,
+                new Pagination(taskPage.getTotalElements(), taskPage.getTotalPages(), taskPage.getNumber()+1),
+                tasks
+        ));
     }
 
     public Task getSingleTask(Long id) throws TCException {

@@ -36,6 +36,7 @@ public class GlobalExceptionHandler {
 //    Server Exception
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleServerException(Exception e) {
+        e.printStackTrace();
         System.out.println(e.getMessage());
         Map<String, String> errorBody = new HashMap<>();
         errorBody.put("message", "Internal Server Error!");

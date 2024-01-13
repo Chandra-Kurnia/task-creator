@@ -1,6 +1,7 @@
 package com.example.taskcreator.controllers;
 
 import com.example.taskcreator.Exception.TCException;
+import com.example.taskcreator.dtos.TaskFilter;
 import com.example.taskcreator.dtos.TaskPayload;
 import com.example.taskcreator.dtos.UpdateTaskPayload;
 import com.example.taskcreator.helpers.MessageModel;
@@ -47,9 +48,9 @@ public class TaskController {
     }
 
     @GetMapping(value = "/list-tasks")
-    public ResponseEntity<MessageModel> getListTasks() throws TCException {
+    public ResponseEntity<MessageModel> getListTasks(@ModelAttribute TaskFilter filter) throws TCException {
         try {
-            return taskService.listTasks();
+            return taskService.listTasks(filter);
         }catch (TCException e) {
             throw new TCException(e.getMessage());
         }

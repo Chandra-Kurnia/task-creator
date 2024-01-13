@@ -10,7 +10,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -62,6 +65,8 @@ public class Task {
 
     public Task(){}
 
+    public Task(Long a, String b, LocalDate c, Status status, Priority priority, LocalDate d, LocalDate e){}
+
     public Task(TaskPayload payload, Status status, Priority priority) {
         this.taskName = payload.getTaskName();
         this.status = status;
@@ -69,5 +74,16 @@ public class Task {
         this.dueDate = payload.getDueDate();
     }
 
-    public Task(Long a, String b, LocalDate c, Status status, Priority priority, LocalDate d, LocalDate e){}
+//    public Task(Object[] objectDb) {
+//        BigInteger taskId = (BigInteger) objectDb[0];
+//        Date dueDate = (Date) objectDb[2];
+//        BigInteger priorityId = (BigInteger) objectDb[3];
+//        BigInteger statusId = (BigInteger) objectDb[5];
+//
+//        this.taskId = taskId.longValue();
+//        this.taskName = (String) objectDb[1];
+//        this.dueDate = dueDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//        this.priority = new Priority(priorityId.longValue(), (String) objectDb[4]);
+//        this.status = new Status(statusId.longValue(), (String) objectDb[6]);
+//    }
 }

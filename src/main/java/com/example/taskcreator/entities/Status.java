@@ -47,4 +47,9 @@ public class Status {
     public Status(String statusName) {
         this.statusName = statusName;
     }
+
+    public Status(Long statusId, String statusName) {
+        this.statusId = statusId;
+        this.statusName = statusName;
+    }
 }
