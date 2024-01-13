@@ -24,13 +24,14 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             "from task tsk " +
             "JOIN priority prt ON tsk.priority_id = prt.priority_id " +
             "JOIN status sts ON tsk.status_id = sts.status_id " +
-            "WHERE (:priorityId IS NULL OR FIND_IN_SET(prt.priority_id, :priorityId) > 0) " +
-            "AND (:statusId IS NULL OR FIND_IN_SET(sts.status_id, :statusId) > 0) " +
+            "WHERE 1=1 " +
+            "AND (COALESCE(:priorityIds) IS NULL OR prt.priority_id IN (:priorityIds)) " +
+            "AND (COALESCE(:statusIds) IS NULL OR sts.status_id IN (:statusIds)) " +
             "AND (COALESCE(:taskName, '') = '' OR tsk.task_name LIKE %:taskName%)",
             nativeQuery = true)
     Page<Object[]> getTasks(
-            @Param("priorityId") List<Long> priorityId,
-            @Param("statusId") List<Long> statusId,
+            @Param("priorityIds") List<Long> priorityIds,
+            @Param("statusIds") List<Long> statusIds,
             @Param("taskName") String taskName,
             Pageable pageable);
 }
