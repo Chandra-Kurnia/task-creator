@@ -21,6 +21,8 @@ public class StatusService {
         Status status = new Status(payload.getStatusName());
         Status result = statusRepository.save(status);
 
+        if(result.getStatusId() == null) throw new TCException("Failed create status!");
+
         return ResponseEntity.ok().body(new MessageModel(
                 "Succesfully create status",
                 true,

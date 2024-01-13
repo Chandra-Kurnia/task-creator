@@ -41,4 +41,10 @@ public class Priority {
     @UpdateTimestamp
     @JsonIgnore
     private LocalDate updated_at;
+
+    public Priority(){}
+
+    public Priority(String priorityName){
+        this.priorityName = priorityName;
+    }
 }
