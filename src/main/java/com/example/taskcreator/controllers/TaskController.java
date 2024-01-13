@@ -2,6 +2,7 @@ package com.example.taskcreator.controllers;
 
 import com.example.taskcreator.Exception.TCException;
 import com.example.taskcreator.dtos.TaskPayload;
+import com.example.taskcreator.dtos.UpdateTaskPayload;
 import com.example.taskcreator.helpers.MessageModel;
 import com.example.taskcreator.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,19 +34,22 @@ public class TaskController {
         }
     }
 
-    @GetMapping(value = "/list-tasks")
-    public ResponseEntity<MessageModel> getListTasks() throws TCException {
+    @PutMapping(value = "/update-task/{id}")
+    public ResponseEntity<MessageModel> updateTask(
+            @PathVariable(value = "id") Long id,
+            @RequestBody TaskPayload payload
+            ) throws TCException {
         try {
-            return taskService.listTasks();
+            return taskService.updateTask(id, payload);
         }catch (TCException e) {
             throw new TCException(e.getMessage());
         }
     }
 
-    @PutMapping(value = "/update-task")
-    public ResponseEntity<MessageModel> updateTask() throws TCException {
+    @GetMapping(value = "/list-tasks")
+    public ResponseEntity<MessageModel> getListTasks() throws TCException {
         try {
-            return taskService.updateTask();
+            return taskService.listTasks();
         }catch (TCException e) {
             throw new TCException(e.getMessage());
         }
