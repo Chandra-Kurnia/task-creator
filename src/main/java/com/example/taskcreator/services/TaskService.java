@@ -43,7 +43,7 @@ public class TaskService {
                 "Succesfully create task",
                 true,
                 null,
-                null
+                result
         ));
     }
 
