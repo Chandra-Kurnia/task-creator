@@ -8,11 +8,9 @@ import java.util.Date;
 
 @Setter
 @Getter
-public class Task {
-    private String taskId;
+public class TaskPayload {
+    private Long priorityId;
+    private Long statusId;
     private String taskName;
-    private String status;
-    private String priority;
-    private LocalDate created_at;
-    private LocalDate updated_at;
+    private LocalDate dueDate;
 }

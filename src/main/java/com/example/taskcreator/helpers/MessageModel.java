@@ -17,4 +17,11 @@ public class MessageModel {
         this.message = message;
         this.status = status;
     }
+
+    public MessageModel(String message, Boolean status, Object pagination, Object data) {
+        this.message = message;
+        this.status = status;
+        this.pagination = pagination;
+        this.data = data;
+    }
 }
