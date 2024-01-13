@@ -39,6 +39,7 @@ public class TaskService {
 //        save entity to db
         Task result = taskRepository.save(task);
 //        return true if success return false if error
+        if(result.getTaskId() == null) throw new TCException("Failed create new task!");
         return ResponseEntity.ok().body(new MessageModel(
                 "Succesfully create task",
                 true,
@@ -47,11 +48,22 @@ public class TaskService {
         ));
     }
 
-    public ResponseEntity<MessageModel> listTask() throws TCException {
-        return ResponseEntity.ok().body(new MessageModel());
+    public ResponseEntity<MessageModel> getTask(Long id) throws TCException {
+        Optional<Task> foundTask = taskRepository.findById(id);
+        Task task = foundTask.orElseThrow(() -> new TCException("Task not found!"));
+        return ResponseEntity.ok().body(new MessageModel(
+                "Succesfully get task",
+                true,
+                null,
+                task
+        ));
     }
 
     public ResponseEntity<MessageModel> updateTask() throws TCException {
+        return ResponseEntity.ok().body(new MessageModel());
+    }
+
+    public ResponseEntity<MessageModel> listTasks() throws TCException {
         return ResponseEntity.ok().body(new MessageModel());
     }
 }

@@ -24,10 +24,19 @@ public class TaskController {
         }
     }
 
-    @GetMapping(value = "/list-tasks")
-    public ResponseEntity<MessageModel> getListTask() throws TCException {
+    @GetMapping(value = "/get-task/{id}")
+    public ResponseEntity<MessageModel> getTask(@PathVariable(value = "id") Long id) throws TCException {
         try {
-            return taskService.listTask();
+            return taskService.getTask(id);
+        }catch (TCException e) {
+            throw new TCException(e.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/list-tasks")
+    public ResponseEntity<MessageModel> getListTasks() throws TCException {
+        try {
+            return taskService.listTasks();
         }catch (TCException e) {
             throw new TCException(e.getMessage());
         }
