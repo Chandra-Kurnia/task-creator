@@ -6,10 +6,7 @@ import com.example.taskcreator.helpers.MessageModel;
 import com.example.taskcreator.services.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -24,6 +21,15 @@ public class StatusController {
     public ResponseEntity<MessageModel> createStatus(@RequestBody StatusPayload payload) throws TCException {
         try {
             return statusService.createStatus(payload);
+        }catch (TCException e) {
+            throw new TCException(e.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/list-status")
+    public ResponseEntity<MessageModel> getListStatus() throws TCException {
+        try {
+            return statusService.getListStatus();
         }catch (TCException e) {
             throw new TCException(e.getMessage());
         }

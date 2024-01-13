@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PriorityService {
 
@@ -22,11 +24,21 @@ public class PriorityService {
         if(result.getPriorityId() == null) throw new TCException("Failed create priority!");
 
         return ResponseEntity.ok().body(new MessageModel(
-                "Succesfully create status",
+                "Succesfully create priority",
                 true,
                 null,
                 result
         ));
+    }
 
+    public ResponseEntity<MessageModel> listPriorities() throws TCException {
+        List<Priority> priorities = priorityRepository.findAll();
+
+        return ResponseEntity.ok().body(new MessageModel(
+                "Succesfully get priorities",
+                true,
+                null,
+                priorities
+        ));
     }
 }
