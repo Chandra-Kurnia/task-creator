@@ -1,6 +1,7 @@
 package com.example.taskcreator.controllers;
 
 import com.example.taskcreator.Exception.TCException;
+import com.example.taskcreator.dtos.ListOfNumberPayload;
 import com.example.taskcreator.dtos.TaskFilter;
 import com.example.taskcreator.dtos.TaskPayload;
 import com.example.taskcreator.dtos.UpdateTaskPayload;
@@ -51,6 +52,17 @@ public class TaskController {
     public ResponseEntity<MessageModel> getListTasks(@ModelAttribute TaskFilter filter) throws TCException {
         try {
             return taskService.listTasks(filter);
+        }catch (TCException e) {
+            throw new TCException(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/sum-all-number")
+    public ResponseEntity<MessageModel> sumALlNumber (
+            @RequestBody ListOfNumberPayload listOfNumberPayload
+            ) throws TCException {
+        try {
+            return taskService.sumALlNumber(listOfNumberPayload);
         }catch (TCException e) {
             throw new TCException(e.getMessage());
         }

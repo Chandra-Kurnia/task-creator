@@ -1,10 +1,7 @@
 package com.example.taskcreator.services;
 
 import com.example.taskcreator.Exception.TCException;
-import com.example.taskcreator.dtos.ListOfTasks;
-import com.example.taskcreator.dtos.Pagination;
-import com.example.taskcreator.dtos.TaskFilter;
-import com.example.taskcreator.dtos.TaskPayload;
+import com.example.taskcreator.dtos.*;
 import com.example.taskcreator.entities.Priority;
 import com.example.taskcreator.entities.Status;
 import com.example.taskcreator.entities.Task;
@@ -88,8 +85,6 @@ public class TaskService {
 
     public ResponseEntity<MessageModel> listTasks(TaskFilter filter) throws TCException {
         Pageable pageable = PageRequest.of(filter.getPage()-1, filter.getLimit());
-//        Page<Task> taskPage = taskRepository.findAll(pageable);
-//        List<Task> tasks = taskPage.getContent();
 
         Page<Object[]> taskPage = taskRepository.getTasks(
                 filter.getPriorityId(),
@@ -110,6 +105,21 @@ public class TaskService {
                 new Pagination(taskPage.getTotalElements(), taskPage.getTotalPages(), taskPage.getNumber()+1),
                 tasks
         ));
+    }
+
+    public ResponseEntity<MessageModel> sumALlNumber(ListOfNumberPayload num) throws TCException {
+        List<Integer> listNum = num.getListOfNumber();
+
+        return ResponseEntity.ok().body(new MessageModel(
+                "Succesfully sum all number",
+                true,
+                null,
+                sumUsingStream(listNum)
+        ));
+    }
+
+    public static int sumUsingStream(List<Integer> numbers) {
+        return numbers.stream().mapToInt(Integer::intValue).sum();
     }
 
     public Task getSingleTask(Long id) throws TCException {
