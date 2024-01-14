@@ -16,6 +16,7 @@ public class AppConfig {
     public FilterRegistrationBean<JwtTokenFilter> jwtTokenFilter() {
         FilterRegistrationBean<JwtTokenFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new JwtTokenFilter(jwtUtil));
+//        registrationBean.addUrlPatterns("/dummyAPI/*");
         registrationBean.addUrlPatterns("/task/*");
         registrationBean.addUrlPatterns("/priority/*");
         registrationBean.addUrlPatterns("/status/*");

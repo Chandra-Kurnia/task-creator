@@ -48,7 +48,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 return false;
             }
 
-            boolean expire = jwtUtil.isTokenExpired(token);
+            boolean expire = jwtUtil.isTokenExpired(token, false);
             if(expire) {
                 return false;
             }
