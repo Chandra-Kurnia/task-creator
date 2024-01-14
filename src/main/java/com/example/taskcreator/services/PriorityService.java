@@ -18,6 +18,8 @@ public class PriorityService {
     PriorityRepository priorityRepository;
 
     public ResponseEntity<MessageModel> createPriority(PriorityPayload payload) throws TCException {
+        Priority foundPriority = priorityRepository.findByPriorityName(payload.getPriority());
+        if(foundPriority != null) throw new TCException("Priority already exist!");
         Priority priority = new Priority(payload.getPriority());
         Priority result = priorityRepository.save(priority);
 

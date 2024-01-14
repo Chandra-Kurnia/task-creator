@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/task")
 public class TaskController {
@@ -19,7 +21,7 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping(value = "/create-task")
-    public ResponseEntity<MessageModel> createTask(@RequestBody TaskPayload payload) throws TCException {
+    public ResponseEntity<MessageModel> createTask(@Valid @RequestBody TaskPayload payload) throws TCException {
         try {
             return taskService.createTask(payload);
         }catch (TCException e) {
@@ -38,6 +40,7 @@ public class TaskController {
 
     @PutMapping(value = "/update-task/{id}")
     public ResponseEntity<MessageModel> updateTask(
+            @Valid
             @PathVariable(value = "id") Long id,
             @RequestBody TaskPayload payload
             ) throws TCException {
@@ -59,6 +62,7 @@ public class TaskController {
 
     @PostMapping(value = "/sum-all-number")
     public ResponseEntity<MessageModel> sumALlNumber (
+            @Valid
             @RequestBody ListOfNumberPayload listOfNumberPayload
             ) throws TCException {
         try {

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/priority")
 public class PriorityController {
@@ -16,7 +18,7 @@ public class PriorityController {
     @Autowired
     PriorityService priorityService;
     @PostMapping(value = "/create-priority")
-    public ResponseEntity<MessageModel> createPriority(@RequestBody PriorityPayload payload) throws TCException {
+    public ResponseEntity<MessageModel> createPriority(@Valid @RequestBody PriorityPayload payload) throws TCException {
         try {
             return priorityService.createPriority(payload);
         }catch (TCException e) {

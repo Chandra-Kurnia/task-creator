@@ -2,6 +2,7 @@ package com.example.taskcreator.services;
 
 import com.example.taskcreator.Exception.TCException;
 import com.example.taskcreator.dtos.StatusPayload;
+import com.example.taskcreator.entities.Priority;
 import com.example.taskcreator.entities.Status;
 import com.example.taskcreator.helpers.MessageModel;
 import com.example.taskcreator.repositories.StatusRepository;
@@ -20,6 +21,8 @@ public class StatusService {
     StatusRepository statusRepository;
 
     public ResponseEntity<MessageModel> createStatus(StatusPayload payload) throws TCException {
+        Status foundStatus = statusRepository.findByStatusName(payload.getStatusName());
+        if(foundStatus != null) throw new TCException("Status already exist!");
         Status status = new Status(payload.getStatusName());
         Status result = statusRepository.save(status);
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
@@ -18,7 +19,7 @@ public class StatusController {
     StatusService statusService;
 
     @PostMapping(value = "/create-status")
-    public ResponseEntity<MessageModel> createStatus(@RequestBody StatusPayload payload) throws TCException {
+    public ResponseEntity<MessageModel> createStatus(@Valid @RequestBody StatusPayload payload) throws TCException {
         try {
             return statusService.createStatus(payload);
         }catch (TCException e) {
